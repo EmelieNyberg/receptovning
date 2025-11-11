@@ -7,6 +7,7 @@ html {
 }
 
 body {
+	padding-bottom: 64px;
 	background-color: rgba(161, 0, 0, 0.3);
 }
 
@@ -15,6 +16,7 @@ h1 {
 	font-size: 50px;
 	color: rgba(252, 252, 252, 1);
 	text-align: center;
+	margin: 24px;
 }
 
 main {
@@ -24,13 +26,21 @@ main {
 }
 
 .main-image {
+	/* för att hela tiden hålla sig i samma bredd som sin container/föräder. ex krymper när föräldern krymper */
 	width: 100%;
+	/* Bilden får aldrig bli bredare än 1280px, även om fönstret är större.
+	På stora skärmar = den stannar på 1280px.
+	På små skärmar = den följer width: 100% och blir mindre. */
 	max-width: 1280px;
+	/* Bildens höjd låses till exakt 500px, oavsett originalbildens proportioner. */
 	height: 500px;
 	display: block;
+	/* Centrerar bilden horisontellt när den är smalare än sin förälder.
+	0 = ingen marginal uppe/nere,
+	auto på vänster/höger = centrera. */
 	margin: 0 auto;
+	/* fyller hela 500px höga ytan utan att ändra proportionerna */
 	object-fit: cover;
-	/* beskär bilden snyggt då proportionerna inte matchar */
 }
 
 .recipe-container {
@@ -71,9 +81,33 @@ h3 {
 ul,
 ol {
 	padding-left: 24px;
+	/* motsvarar 32px för font size 16px, båda går att skriva */
 	line-height: 2;
 }
 
-.custom-bullets li::marker {
-	font-weight: 300;
+.serving-images {
+	display: flex;
+	gap: 24px;
+}
+
+.serving-image {
+	width: 100%;
+	min-width: 300px;
+	height: 467px;
+	display: block;
+	margin: 0 auto;
+	/* beskär bilden snyggt då proportionerna inte matchar */
+	object-fit: cover;
+}
+
+/* gör brytpunkten när bilderna inte får plats längre */
+@media (max-width: 715px) {
+	.serving-images {
+		/* stapla bilderna */
+		flex-direction: column;
+	}
+
+	.recipe-container {
+		padding: 48px 16px 64px 16px;
+	}
 }
